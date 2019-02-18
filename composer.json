@@ -1,0 +1,14 @@
+{
+    "name": "mixplat/mixplat-client",
+    "description": "Client for MIXPLAT API 3.0",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Serg A",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.5"
+    }
+}
