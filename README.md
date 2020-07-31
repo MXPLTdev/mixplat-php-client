@@ -1,67 +1,73 @@
-Client for MIXPLAT API 3.0
-=======================
+# Mixplat API PHP Client Library
 
-With the advent of new payment methods (bank cards, electronic money, etc.), it became necessary to develop a new, universal API.
+Клиент для работы [API Mixplat](https://mixplat.ru/)
 
-- Work with various payment methods.
-- Can send both synchronous and asynchronous requests using the same interface.
-- The form of payment can be both on the MIXPLAT side and on the TSP side.
-- Recurring payments.
+Документация и описание: [docs.mixplat.ru](https://docs.mixplat.ru)
 
-```php
-$client = new \mixplat\mixplatclient\Client();
+## Требования
+PHP 5.3 (и выше)
 
-$params = [
-        'payment_id' => '202cb962ac59075b964b07152d234b70',
-        'signature' => 'd8d31b948ff91c896feced291ee067d7'
-    ];
+## Установка
+### В консоли с помощью Composer
 
-$payment = $client->getPayment($params);
-
-echo $payment;
-
-```
-
-## Help and docs
-
-- [Documentation](https://docs.google.com/document/d/1d8UbDm9jiSa2FmjKw5AiZS-Oi7sW3I1hFIIvzbe1hQU/edit#)
-
-
-## Installing MIXPLAT Client
-
-The recommended way to install is through
-[Composer](http://getcomposer.org).
-
+1. Установите менеджер пакетов Composer.
+2. В консоли выполните команду
 ```bash
-# Install Composer
-curl -sS https://getcomposer.org/installer | php
+composer require mixplat/mixplat-php-client
 ```
 
-Next, run the Composer command to install the latest stable version of MIXPLAT Client:
-
+### В файле composer.json своего проекта
+1. Добавьте строку `"mixplat/mixplat-php-client": "*"` в список зависимостей вашего проекта в файле composer.json
+```
+...
+    "require": {
+        "mixplat/mixplat-php-client": "*"
+...
+```
+2. Обновите зависимости проекта. В консоли перейдите в каталог, где лежит composer.json, и выполните команду:
 ```bash
-php composer.phar require mixplat/mixplat-client
+composer update
 ```
-
-After installing, you need to require Composer's autoloader:
-
+3. В коде вашего проекта подключите автозагрузку файлов нашего клиента:
 ```php
-require 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 ```
 
-You can then later update Guzzle using composer:
+### Вручную
 
- ```bash
-composer.phar update
- ```
+1. Скачайте [архив Mixplat API PHP Client](https://github.com/MXPLTdev/mixplat-php-client/archive/master.zip), распакуйте его и скопируйте каталог src в нужное место в вашем проекте.
+2. В коде вашего проекта подключите автозагрузку файлов нашего клиента:
+```php
+require __DIR__ . '/src/autoload.php'; 
+```
 
+## Начало работы
 
-## Version Guidance
+Создайте и заполните конфигурацию подключения
+```php
+$mixplatConfiguration = new \MixplatClient\Configuration();
+$mixplatConfiguration->projectId = $projectId;
+$mixplatConfiguration->apiKey = $apiKey;
+```
+Создайте экземпляр объекта клиента, укажите ему кнфигурацию
+```php
+$httpClient = new \MixplatClient\HttpClient\SimpleHttpClient();
+$mixplatClient = new \MixplatClient\MixplatClient();
+$mixplatClient->setConfig($mixplatConfiguration);
+$mixplatClient->setHttpClient($httpClient);
+```
+Создайте экземпляр метода API и задайте ему необходимые атрибуты
+```php
+$createPayment = new \MixplatClient\Method\CreatePayment();
 
-| Version | Status     | Packagist                | Namespace    | Repo                | Docs                 | PSR-7 | PHP Version |
-|---------|------------|--------------------------|--------------|---------------------|----------------------|-------|-------------|
-| 3.0     | Latest     | `mixplat/mixplat-client` | `GuzzleHttp` | [v3][mixplat-3]     | [v3][mixplat-3-docs] | Yes   | >= 5.5      |
-
-[mixplat-3]: https://github.com/MXPLTdev/php-client
-
-[mixplat-3-docs]: https://docs.google.com/document/d/1d8UbDm9jiSa2FmjKw5AiZS-Oi7sW3I1hFIIvzbe1hQU/edit#
+$createPayment->test = 1;
+$createPayment->merchantPaymentId = $ourPaymentId;
+$createPayment->paymentMethod = \MixplatClient\MixplatVars::PAYMENT_METHOD_MOBILE;
+$createPayment->userPhone = $phone;
+$createPayment->amount = 3000;
+$createPayment->merchantFields = array('pid' => $ourPaymentId);
+```
+Вызовите метод
+```php
+$response = $mixplatClient->request($createPayment);
+```

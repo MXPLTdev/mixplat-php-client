@@ -1,14 +1,14 @@
 {
-    "name": "mixplat/mixplat-client",
-    "description": "Client for MIXPLAT API 3.0",
+    "name": "mixplat/mixplat-php-client",
+    "description": "Mixplat API Client",
     "type": "library",
-    "authors": [
-        {
-            "name": "Serg A",
-            "role": "Developer"
-        }
-    ],
     "require": {
-        "php": ">=5.5"
+        "php": ">=5.3.0",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "MixplatClient\\": "src/"
+        }
     }
 }
