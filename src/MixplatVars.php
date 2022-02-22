@@ -134,4 +134,14 @@ class MixplatVars
     const NOTIFY_REQUEST_REFUND_STATUS = 'refund_status';
     const NOTIFY_REQUEST_PAYMENT_CHECK = 'payment_check';
     const NOTIFY_REQUEST_SMS = 'sms';
+
+
+    /* Тип биллинга (billing_type) */
+    /* для payment_method = card (оплата по карте)   */
+    /* в зависимости от переданного значения - изменяется приоритет оплаты на платежной форме  */
+    const BILLING_TYPE_BANK_CARD = 'bank_card';
+    const BILLING_TYPE_APPLE_PAY = 'apple_pay ';
+    const BILLING_TYPE_GOOGLE_PAY = 'google_pay ';
+    const BILLING_TYPE_YANDEX_PAY = 'yandex_pay';
+    const BILLING_TYPE_SAMSUNG_PAY = 'samsung_pay';
 }

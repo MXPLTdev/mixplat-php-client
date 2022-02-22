@@ -159,6 +159,16 @@ class CreatePaymentForm extends MixplatMethod
 
 
     /**
+     * Тип биллинга (billing_type) для payment_method = card (оплата по карте).
+     * В зависимости от переданного значения - изменяется приоритет оплаты на платежной форме.
+     * Необязательный.
+     * \MixplatClient\MixplatVars::BILLING_TYPE_*
+     * @var string|null
+     */
+    public $billingType;
+
+
+    /**
      * @return string
      */
     public function getMethod()

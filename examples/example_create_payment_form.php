@@ -17,11 +17,12 @@ $ourPaymentId = rand(1000, 10000);
 
 $createPayment->test = 1;
 $createPayment->merchantPaymentId = $ourPaymentId;
-$createPayment->paymentMethod = \MixplatClient\MixplatVars::PAYMENT_METHOD_MOBILE;
-$createPayment->userPhone = $successStatusUserPhone;
+$createPayment->paymentMethod = \MixplatClient\MixplatVars::PAYMENT_METHOD_CARD;
+
 $createPayment->amount = 2100;
 $createPayment->merchantFields = array('pid' => $ourPaymentId);
 $createPayment->description = 'Оплата через форму';
+$createPayment->billingType = \MixplatClient\MixplatVars::BILLING_TYPE_GOOGLE_PAY;
 
 try {
     $response = $mixplatClient->request($createPayment);
@@ -35,6 +36,8 @@ print_r($response);
 if ($response && $response['result'] === \MixplatClient\MixplatVars::RESULT_OK) {
     /* process payment... */
     /* redirect to $response['redirect_url'] */
+    /* header('Location: ' .  $response['redirect_url'] , true, 303); */
+
 } else {
     /* error */
 }
