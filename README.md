@@ -49,7 +49,7 @@ $mixplatConfiguration = new \MixplatClient\Configuration();
 $mixplatConfiguration->projectId = $projectId;
 $mixplatConfiguration->apiKey = $apiKey;
 ```
-Создайте экземпляр объекта клиента, укажите ему кнфигурацию
+Создайте экземпляр объекта клиента, укажите ему конфигурацию
 ```php
 $httpClient = new \MixplatClient\HttpClient\SimpleHttpClient();
 $mixplatClient = new \MixplatClient\MixplatClient();
