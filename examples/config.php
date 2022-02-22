@@ -1,5 +1,5 @@
 <?php
-require_once '../vendor/autoload.php';
+require_once '../src/autoload.php';
 
 $projectId = 2426;
 $apiKey = '91ef40fe6013d10c50c4f474c20fb654743b43aa';
