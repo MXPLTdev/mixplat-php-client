@@ -2,7 +2,7 @@
     "name": "mixplat/mixplat-php-client",
     "description": "Mixplat API Client",
     "type": "library",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "license": "MIT",
     "require": {
         "php": ">=5.3.0",
