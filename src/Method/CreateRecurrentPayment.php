@@ -72,9 +72,7 @@ class CreateRecurrentPayment extends MixplatMethod
     public function getParams($config)
     {
         $signature = $this->encryptSignature(
-            $this->requestId .
-            $config->projectId .
-            $this->merchantPaymentId .
+            $this->recurrentId .
             $config->apiKey
         );
 
