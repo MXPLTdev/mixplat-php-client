@@ -10,7 +10,7 @@ class PhoneInfo extends MixplatMethod
      * Номер телефона в международном формате без символа "+".
      * @var string
      */
-    public $userPhone;
+    public $phone;
 
 
     /**
@@ -18,7 +18,7 @@ class PhoneInfo extends MixplatMethod
      */
     public function getMethod()
     {
-        return 'phone_info';
+        return 'mc/phone_information';
     }
 
     /**
@@ -29,14 +29,14 @@ class PhoneInfo extends MixplatMethod
     {
         $signature = $this->encryptSignature(
             $config->projectId .
-            $this->userPhone .
+            $this->phone .
             $config->apiKey
         );
 
         $params = $this->parseParams();
         $params['signature'] = $signature;
         $params['api_version'] = $config->apiVersion;
-        $params['project_id'] = $config->projectId;
+        $params['service_id'] = $config->projectId;
         return $params;
     }
 }

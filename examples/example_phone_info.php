@@ -11,11 +11,12 @@ $mixplatClient = new \MixplatClient\MixplatClient();
 $mixplatClient->setConfig($mixplatConfiguration);
 $mixplatClient->setHttpClient($httpClient);
 
-$phoneInfo = new \MixplatClient\Method\PhoneInfo();
-$phoneInfo->userPhone = $successStatusUserPhone;
+$apiRequest = new \MixplatClient\Method\PhoneInfo();
+
+$apiRequest->phone = '79991234567';
 
 try {
-    $response = $mixplatClient->request($phoneInfo);
+    $response = $mixplatClient->request($apiRequest);
 } catch (\MixplatClient\MixplatException $errorException) {
     echo 'Error: ' . $errorException->getMessage();
     $response = null;

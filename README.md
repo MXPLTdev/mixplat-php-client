@@ -48,6 +48,8 @@ require __DIR__ . '/src/autoload.php';
 $mixplatConfiguration = new \MixplatClient\Configuration();
 $mixplatConfiguration->projectId = $projectId;
 $mixplatConfiguration->apiKey = $apiKey;
+$mixplatConfiguration->companyId = $companyId;
+$mixplatConfiguration->companyApiKey = $companyApiKey;
 ```
 Создайте экземпляр объекта клиента, укажите ему конфигурацию
 ```php
@@ -58,16 +60,16 @@ $mixplatClient->setHttpClient($httpClient);
 ```
 Создайте экземпляр метода API и задайте ему необходимые атрибуты
 ```php
-$createPayment = new \MixplatClient\Method\CreatePayment();
+$apiRequest = new \MixplatClient\Method\CreatePaymentForm();
 
-$createPayment->test = 1;
-$createPayment->merchantPaymentId = $ourPaymentId;
-$createPayment->paymentMethod = \MixplatClient\MixplatVars::PAYMENT_METHOD_MOBILE;
-$createPayment->userPhone = $phone;
-$createPayment->amount = 3000;
-$createPayment->merchantFields = array('pid' => $ourPaymentId);
+$apiRequest->amount             = 300;
+$apiRequest->description        = 'Тестовая оплата';
+$apiRequest->userEmail          = 'user@mail.ru';
+$apiRequest->userName           = 'Константин Константинопольский';
+$apiRequest->userPhone          = '79991234567';
+$apiRequest->test               = 1;
 ```
 Вызовите метод
 ```php
-$response = $mixplatClient->request($createPayment);
+$response = $mixplatClient->request($apiRequest);
 ```

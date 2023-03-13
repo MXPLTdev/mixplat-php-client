@@ -11,21 +11,24 @@ $mixplatClient = new \MixplatClient\MixplatClient();
 $mixplatClient->setConfig($mixplatConfiguration);
 $mixplatClient->setHttpClient($httpClient);
 
-$createPayment = new \MixplatClient\Method\CreatePaymentForm();
+$apiRequest = new \MixplatClient\Method\CreatePaymentForm();
 
-$ourPaymentId = rand(1000, 10000);
-
-$createPayment->test = 1;
-$createPayment->merchantPaymentId = $ourPaymentId;
-$createPayment->paymentMethod = \MixplatClient\MixplatVars::PAYMENT_METHOD_CARD;
-
-$createPayment->amount = 2100;
-$createPayment->merchantFields = array('pid' => $ourPaymentId);
-$createPayment->description = 'Оплата через форму';
-$createPayment->billingType = \MixplatClient\MixplatVars::BILLING_TYPE_GOOGLE_PAY;
+$apiRequest->amount             = 300;
+$apiRequest->description        = 'Тестовая оплата';
+$apiRequest->paymentMethod      = \MixplatClient\MixplatVars::PAYMENT_METHOD_CARD;
+$apiRequest->billingType        = \MixplatClient\MixplatVars::BILLING_TYPE_BANK_CARD;
+$apiRequest->merchantFields     = ['test_field'=>'test_value'];
+$apiRequest->userEmail          = 'user@mail.ru';
+$apiRequest->userName           = 'Константин Константинопольский';
+$apiRequest->userPhone          = '79991234567';
+$apiRequest->test               = 0;
+$apiRequest->items              = [
+    ['name'=>'Название позиции','sum'=>100],
+    ['name'=>'Еще одна позиция','sum'=>200]
+];
 
 try {
-    $response = $mixplatClient->request($createPayment);
+    $response = $mixplatClient->request($apiRequest);
 } catch (\MixplatClient\MixplatException $errorException) {
     echo 'Error: ' . $errorException->getMessage();
     $response = null;

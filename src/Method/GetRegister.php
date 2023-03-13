@@ -15,16 +15,6 @@ class GetRegister extends MixplatMethod
     public $period;
 
     /**
-     * Тип выгружаемого реестра, одно из:
-     *  - payment (выгрузка платежей)
-     *  - refund (выгрузка возвратов)
-     *  - sms (выгрузка смс)
-     * @var string
-     */
-    public $type;
-
-
-    /**
      * @return string
      */
     public function getMethod()
@@ -40,6 +30,7 @@ class GetRegister extends MixplatMethod
     {
         $signature = $this->encryptSignature(
             $config->companyId .
+            $this->period .
             $config->companyApiKey
         );
 

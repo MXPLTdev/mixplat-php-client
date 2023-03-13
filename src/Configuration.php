@@ -14,6 +14,4 @@ class Configuration
 
     public $companyId;
     public $companyApiKey;
-
-
 }

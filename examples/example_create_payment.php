@@ -11,34 +11,22 @@ $mixplatClient = new \MixplatClient\MixplatClient();
 $mixplatClient->setConfig($mixplatConfiguration);
 $mixplatClient->setHttpClient($httpClient);
 
-$createPayment = new \MixplatClient\Method\CreatePayment();
+$apiRequest = new \MixplatClient\Method\CreatePayment();
 
-$ourPaymentId = rand(1000, 10000);
-
-$createPayment->test = 1;
-$createPayment->merchantPaymentId = $ourPaymentId;
-$createPayment->paymentMethod = \MixplatClient\MixplatVars::PAYMENT_METHOD_MOBILE;
-$createPayment->userPhone = $successStatusUserPhone;
-$createPayment->amount = 3000;
-$createPayment->merchantFields = array('pid' => $ourPaymentId);
-
-$createPayment->items = array(
-    array(
-        'name' => 'Журнал "Огонек"',
-        'sum' => 2000,
-        'quantity' => 1,
-        'vat' => \MixplatClient\MixplatVars::ITEMS_VAT_VAT20,
-        'method' => \MixplatClient\MixplatVars::ITEMS_METHOD_FULL_PAYMENT,
-        'object' => \MixplatClient\MixplatVars::ITEMS_OBJECT_PAYMENT,
-    ),
-    array(
-        'name' => 'Журнал "Мурзилка"',
-        'sum' => 1000,
-    ),
-);
+$apiRequest->amount             = 300;
+$apiRequest->description        = 'Тестовая оплата';
+$apiRequest->merchantFields     = ['test_field'=>'test_value'];
+$apiRequest->userEmail          = 'user@mail.ru';
+$apiRequest->userName           = 'Константин Константинопольский';
+$apiRequest->userPhone          = '79991234567';
+$apiRequest->test               = 1;
+$apiRequest->items              = [
+    ['name'=>'Название позиции','sum'=>100],
+    ['name'=>'Еще одна позиция','sum'=>200]
+];
 
 try {
-    $response = $mixplatClient->request($createPayment);
+    $response = $mixplatClient->request($apiRequest);
 } catch (\MixplatClient\MixplatException $errorException) {
     echo 'Error: ' . $errorException->getMessage();
     $response = null;
