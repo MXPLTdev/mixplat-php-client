@@ -73,3 +73,21 @@ $apiRequest->test               = 1;
 ```php
 $response = $mixplatClient->request($apiRequest);
 ```
+## Перенаправление на платёжную форму
+
+При обращении к методу `CreatePaymentForm` и получении ссылки на платёжную форму вида `$response['redirect_url']` для переадресации плательщика на эту форму используйте редирект с использованием JavaScript:
+
+```php
+echo "<script>window.location.replace('" . $response['redirect_url'] . "');</script>";
+exit;
+```
+Использование редиректа с помощью `header`:
+
+```php
+header("Location: ".$response['redirect_url']);
+exit;
+```
+
+может вызывать некорректное поведение в некоторых встроенных браузерах (in-app browsers), используемых в мобильных приложениях.
+
+См. подробнее в [примере](https://github.com/MXPLTdev/mixplat-php-client/blob/master/examples/example_create_payment_form.php).

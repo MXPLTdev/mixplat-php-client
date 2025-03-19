@@ -39,7 +39,7 @@ print_r($response);
 if ($response && $response['result'] === \MixplatClient\MixplatVars::RESULT_OK) {
     /* process payment... */
     /* redirect to $response['redirect_url'] */
-    /* header('Location: ' .  $response['redirect_url'] , true, 303); */
+    /* echo "<script>window.location.replace('".$response['redirect_url']."');</script>";
 
 } else {
     /* error */
