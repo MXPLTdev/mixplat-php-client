@@ -13,19 +13,24 @@ $mixplatClient->setHttpClient($httpClient);
 
 $apiRequest = new \MixplatClient\Method\CreatePaymentForm();
 
-$apiRequest->amount             = 300;
+$apiRequest->amount             = 30000;
 $apiRequest->description        = 'Тестовая оплата';
 $apiRequest->paymentMethod      = \MixplatClient\MixplatVars::PAYMENT_METHOD_CARD;
-$apiRequest->billingType        = \MixplatClient\MixplatVars::BILLING_TYPE_BANK_CARD;
-$apiRequest->merchantFields     = ['test_field'=>'test_value'];
+$apiRequest->merchantFields     = array('test_field' => 'test_value');
 $apiRequest->userEmail          = 'user@mail.ru';
 $apiRequest->userName           = 'Константин Константинопольский';
 $apiRequest->userPhone          = '79991234567';
-$apiRequest->test               = 0;
-$apiRequest->items              = [
-    ['name'=>'Название позиции','sum'=>100],
-    ['name'=>'Еще одна позиция','sum'=>200]
-];
+$apiRequest->test               = 1;
+// Чек для ФФД 1.2.
+$apiRequest->items = array(
+    array(
+        'name' => 'Блокнот',
+        'quantity' => 3,
+        'sum' => 30000, // 3 шт. по 100 ₽
+        'unit' => \MixplatClient\MixplatVars::ITEMS_UNIT_FFD12_PIECE,
+        'payment_object' => \MixplatClient\MixplatVars::ITEMS_OBJECT_FFD12_COMMODITY,
+    ),
+);
 
 try {
     $response = $mixplatClient->request($apiRequest);
@@ -39,7 +44,7 @@ print_r($response);
 if ($response && $response['result'] === \MixplatClient\MixplatVars::RESULT_OK) {
     /* process payment... */
     /* redirect to $response['redirect_url'] */
-    /* echo "<script>window.location.replace('".$response['redirect_url']."');</script>";
+    // echo '<script>window.location.replace(' . json_encode($response['redirect_url'], JSON_HEX_TAG) . ');</script>';
 
 } else {
     /* error */

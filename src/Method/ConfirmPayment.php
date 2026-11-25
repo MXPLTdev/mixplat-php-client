@@ -14,7 +14,7 @@ class ConfirmPayment extends MixplatMethod
 
     /**
      * Сумма списания (в минорных единицах, копейках)
-     * От 100 до 50000000 для payment_method = card
+     * От 100 до 100000000 для payment_method = card
      * Необязательный параметр
      * @var int|null
      */

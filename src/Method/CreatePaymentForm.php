@@ -73,7 +73,7 @@ class CreatePaymentForm extends MixplatMethod
 
     /**
      * Описание платежа. Отображается на платёжной форме и в личном кабинете ТСП.
-     * От 3 до 256 символов. Необязательный параметр, по умолчанию "Оплата заказа".
+     * От 3 до 125 символов. Необязательный параметр, по умолчанию "Оплата заказа".
      * @var string|null
      */
     public $description;
@@ -96,15 +96,17 @@ class CreatePaymentForm extends MixplatMethod
 
     /**
      * Сумма платежа (в минорных единицах, копейках).
-     * От 100 до 50000000 для payment_method = card, bank
-     * От 1000 до 1500000 для payment_method = mobile, wallet
+     * От 100 до 100000000 для payment_method = card
+     * От 1000 до 1500000 для payment_method = mobile
      * Обязательный параметр
      * @var int
      */
     public $amount;
 
     /**
-     * Данные для чека
+     * Позиции чека. sum — сумма позиции с учётом quantity в минорных единицах.
+     * Типы unit и payment_object зависят от версии ФФД.
+     * @see https://docs.mixplat.ru/methods#items
      * Необязательный параметр.
      * @var array|null
      */
@@ -128,7 +130,7 @@ class CreatePaymentForm extends MixplatMethod
 
     /**
      * Номер телефона Плательщика в международном формате без символа "+"
-     * Обязательный при payment_method = mobile
+     * Указывается, если номер известен.
      * @var string|null
      */
     public $userPhone;
@@ -171,8 +173,8 @@ class CreatePaymentForm extends MixplatMethod
 
     /**
      * Схема проведения платежа по банковским картам
-     * Необязательный, по умолчанию "sms".
-     * \MixplatClient\MixplatVars::CARD_SHEME_*
+     * Необязательный, по умолчанию "single".
+     * \MixplatClient\MixplatVars::PAYMENT_SCHEME_*
      * @var string|null
      */
     public $paymentScheme;

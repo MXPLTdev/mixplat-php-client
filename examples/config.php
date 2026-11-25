@@ -1,5 +1,5 @@
 <?php
-require_once '../src/autoload.php';
+require_once __DIR__ . '/../src/autoload.php';
 
 $projectId = 123456;
 $apiKey = '9o6gn13f1734f27h4k0b118034277e675032f621';

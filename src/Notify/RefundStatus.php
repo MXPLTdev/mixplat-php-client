@@ -68,6 +68,12 @@ class RefundStatus extends MixplatNotify
      */
     public $dateCompleted;
 
+    /** @var string|null */
+    public $merchantPaymentId;
+
+    /** @var string */
+    public $statusExtended;
+
     /**
      * Signature.
      * @var string

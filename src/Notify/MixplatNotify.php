@@ -4,6 +4,8 @@ namespace MixplatClient\Notify;
 
 use MixplatClient\Configuration;
 
+// Сохраняем дополнительные поля уведомлений при расширении API.
+#[\AllowDynamicProperties]
 class MixplatNotify
 {
     /**

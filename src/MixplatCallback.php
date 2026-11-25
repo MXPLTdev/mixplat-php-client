@@ -31,6 +31,9 @@ class MixplatCallback
     public function getNotify()
     {
         $data = json_decode($this->postData, true);
+        if (!isset($data['request']) || !is_string($data['request'])) {
+            return null;
+        }
         switch ($data['request']) {
             case MixplatVars::NOTIFY_REQUEST_PAYMENT_STATUS:
                 $notify = new PaymentStatus();
@@ -62,10 +65,32 @@ class MixplatCallback
      */
     public function returnSuccess($message = null)
     {
-        echo json_encode(array(
-            'result' => MixplatVars::RESULT_OK,
-            'message' => $message,
-        ));
+        $response = array('result' => MixplatVars::RESULT_OK);
+        if ($message !== null) {
+            $response['message'] = $message;
+        }
+        echo json_encode($response);
+    }
+
+    /**
+     * Ответ на payment_check после проверки заказа продавцом.
+     * @param bool|int $allow Разрешить (true, 1) или запретить (false, 0) списание.
+     * @param int|null $amount Новая сумма в минорных единицах.
+     * @param string|null $message Сообщение плательщику.
+     */
+    public function returnPaymentCheck($allow, $amount = null, $message = null)
+    {
+        if (!is_bool($allow) && $allow !== 0 && $allow !== 1) {
+            throw new \InvalidArgumentException('allow must be a boolean or the integer 0 or 1.');
+        }
+        $response = array('result' => MixplatVars::RESULT_OK, 'allow' => (int) $allow);
+        if ($amount !== null) {
+            $response['amount'] = $amount;
+        }
+        if ($message !== null) {
+            $response['message'] = $message;
+        }
+        echo json_encode($response);
     }
 
     /**
@@ -74,11 +99,14 @@ class MixplatCallback
      */
     public function returnError($errorText, $errorDescription = null, $message = null)
     {
-        echo json_encode(array(
-            'result' => $errorText,
-            'error_description' => $errorDescription,
-            'message' => $message,
-        ));
+        $response = array('result' => $errorText);
+        if ($errorDescription !== null) {
+            $response['error_description'] = $errorDescription;
+        }
+        if ($message !== null) {
+            $response['message'] = $message;
+        }
+        echo json_encode($response);
     }
 
 }

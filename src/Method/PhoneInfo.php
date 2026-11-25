@@ -18,7 +18,7 @@ class PhoneInfo extends MixplatMethod
      */
     public function getMethod()
     {
-        return 'mc/phone_information';
+        return 'phone_info';
     }
 
     /**
@@ -36,7 +36,9 @@ class PhoneInfo extends MixplatMethod
         $params = $this->parseParams();
         $params['signature'] = $signature;
         $params['api_version'] = $config->apiVersion;
-        $params['service_id'] = $config->projectId;
+        unset($params['phone']);
+        $params['project_id'] = $config->projectId;
+        $params['user_phone'] = $this->phone;
         return $params;
     }
 }

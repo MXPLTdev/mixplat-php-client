@@ -13,25 +13,28 @@ $mixplatClient->setHttpClient($httpClient);
 
 $createPayment = new \MixplatClient\Method\CreateRecurrentPayment();
 
-$ourPaymentId = rand(1000, 10000);
+$ourPaymentId = (string) rand(1000, 10000);
 
-$createPayment->test = 1;
 $createPayment->merchantPaymentId = $ourPaymentId;
-$createPayment->recurrentId = 100200;
+// Для проверки используйте recurrent_id своего тестового установочного платежа.
+$createPayment->recurrentId = 'demo-recurrent';
 $createPayment->amount = 3000;
 
 $createPayment->items = array(
     array(
         'name' => 'Журнал "Огонек"',
         'sum' => 2000,
-        'quantity' => 1,
+        'quantity' => 2, // 2 экземпляра по 10 ₽
+        'unit' => 0,
         'vat' => \MixplatClient\MixplatVars::ITEMS_VAT_VAT20,
-        'method' => \MixplatClient\MixplatVars::ITEMS_METHOD_FULL_PAYMENT,
-        'object' => \MixplatClient\MixplatVars::ITEMS_OBJECT_PAYMENT,
+        'payment_method' => \MixplatClient\MixplatVars::ITEMS_METHOD_FULL_PAYMENT,
+        'payment_object' => 1,
     ),
     array(
         'name' => 'Журнал "Мурзилка"',
         'sum' => 1000,
+        'unit' => 0,
+        'payment_object' => 1,
     ),
 );
 

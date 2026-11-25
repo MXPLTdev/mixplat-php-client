@@ -21,6 +21,13 @@ if (!$notify->checkSignature($mixplatConfiguration)) {
     return;
 }
 
+if ($notify->request === \MixplatClient\MixplatVars::NOTIFY_REQUEST_PAYMENT_CHECK) {
+    // Найдите заказ и сверьте сумму и валюту. Разрешайте списание только после проверки.
+    $allow = false;
+    $mixplatCallback->returnPaymentCheck($allow);
+    return;
+}
+
 if ($notify->request === \MixplatClient\MixplatVars::NOTIFY_REQUEST_PAYMENT_STATUS) {
     /* process payment status... */
 } elseif ($notify->request === \MixplatClient\MixplatVars::NOTIFY_REQUEST_SMS) {

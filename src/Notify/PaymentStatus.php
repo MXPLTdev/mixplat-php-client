@@ -64,6 +64,9 @@ class PaymentStatus extends MixplatNotify
      */
     public $merchantData;
 
+    /** @var string|null Описание платежа. */
+    public $description;
+
     /**
      * Массив дополнительных сведений о транзакции, которые были переданы при создании платежа
      * методом create_payment_form или методом create_payment.
@@ -167,6 +170,54 @@ class PaymentStatus extends MixplatNotify
      */
     public $bank;
 
+
+    /** @var string|null */
+    public $initPaymentId;
+
+    /** @var string|null */
+    public $merchantInitPaymentId;
+
+    /** @var string|null */
+    public $merchantCampaignId;
+
+    /** @var string|null */
+    public $paymentMethodGroup;
+
+    /** @var string|null */
+    public $userAccountId;
+
+    /** @var string|null */
+    public $userComment;
+
+    /** @var string|null */
+    public $userCountry;
+
+    /** @var string|null */
+    public $userCountryCode;
+
+    /** @var string|null */
+    public $userEmail;
+
+    /** @var string|null */
+    public $userName;
+
+    /** @var string|null */
+    public $userRegion;
+
+    /** @var string|null */
+    public $userRegionCode;
+
+    /** @var string|null */
+    public $utmCampaign;
+
+    /** @var string|null */
+    public $utmMedium;
+
+    /** @var string|null */
+    public $utmSource;
+
+    /** @var string|null */
+    public $utmTerm;
 
     /**
      * Signature.

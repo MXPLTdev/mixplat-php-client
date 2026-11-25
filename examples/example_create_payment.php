@@ -13,17 +13,24 @@ $mixplatClient->setHttpClient($httpClient);
 
 $apiRequest = new \MixplatClient\Method\CreatePayment();
 
-$apiRequest->amount             = 300;
+$apiRequest->amount             = 10000;
 $apiRequest->description        = 'Тестовая оплата';
-$apiRequest->merchantFields     = ['test_field'=>'test_value'];
+$apiRequest->merchantFields     = array('test_field' => 'test_value');
 $apiRequest->userEmail          = 'user@mail.ru';
 $apiRequest->userName           = 'Константин Константинопольский';
-$apiRequest->userPhone          = '79991234567';
+$apiRequest->userPhone          = $successStatusUserPhone;
+$apiRequest->paymentMethod      = \MixplatClient\MixplatVars::PAYMENT_METHOD_MOBILE;
 $apiRequest->test               = 1;
-$apiRequest->items              = [
-    ['name'=>'Название позиции','sum'=>100],
-    ['name'=>'Еще одна позиция','sum'=>200]
-];
+// Чек для ФФД 1.05.
+$apiRequest->items = array(
+    array(
+        'name' => 'Блокнот',
+        'quantity' => 1,
+        'sum' => 10000,
+        'unit' => 'шт.',
+        'payment_object' => 'commodity',
+    ),
+);
 
 try {
     $response = $mixplatClient->request($apiRequest);

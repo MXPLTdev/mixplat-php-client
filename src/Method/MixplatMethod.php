@@ -28,12 +28,10 @@ class MixplatMethod
      */
     protected function parseParams()
     {
-        $vars = get_object_vars($this);
-        $method = $this;
-        $params = array_reduce(array_keys($vars), function ($carry, $key) use ($vars, $method) {
-            $carry[$method->decamelize($key)] = $vars[$key];
-            return $carry;
-        }, array());
+        $params = array();
+        foreach (get_object_vars($this) as $key => $value) {
+            $params[$this->decamelize($key)] = $value;
+        }
 
         return $params;
     }

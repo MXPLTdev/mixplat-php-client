@@ -13,7 +13,7 @@ $mixplatClient->setHttpClient($httpClient);
 
 $refundPayment = new \MixplatClient\Method\RefundPayment();
 
-$ourRefundId = rand(10000, 100000);
+$ourRefundId = (string) rand(10000, 100000);
 
 $refundPayment->paymentId = 'rSKn9oKjFImiLElC7EbpViDGghIOUAvs';
 $refundPayment->merchantRefundId = $ourRefundId;

@@ -73,14 +73,14 @@ class CreatePayment extends MixplatMethod
 
     /**
      * Описание платежа. Отображается в личном кабинете ТСП в информации о платеже и в акцептной смс для payment_method = mobile.
-     * От 3 до 64 символов. Необязательный параметр
+     * От 3 до 125 символов. Необязательный параметр
      * @var string|null
      */
     public $description;
 
     /**
      * Язык сервисных сообщений
-     * Необязательный, по умолчанию "RU".
+     * По умолчанию RU или EN в зависимости от IP пользователя.
      * \MixplatClient\MixplatVars::LANGUAGE_*
      * @var string|null
      */
@@ -96,15 +96,17 @@ class CreatePayment extends MixplatMethod
 
     /**
      * Сумма платежа (в минорных единицах, копейках).
-     * От 100 до 50000000 для payment_method = card, bank
-     * От 1000 до 1500000 для payment_method = mobile, wallet
+     * От 100 до 100000000 для payment_method = card
+     * От 1000 до 1500000 для payment_method = mobile
      * Обязательный параметр
      * @var int
      */
     public $amount;
 
     /**
-     * Данные для чека
+     * Позиции чека. sum — сумма позиции с учётом quantity в минорных единицах.
+     * Типы unit и payment_object зависят от версии ФФД.
+     * @see https://docs.mixplat.ru/methods#items
      * Необязательный параметр.
      * @var array|null
      */
@@ -128,7 +130,7 @@ class CreatePayment extends MixplatMethod
 
     /**
      * Номер телефона Плательщика в международном формате без символа "+"
-     * Обязательный при payment_method = mobile
+     * Указывается, если номер известен.
      * @var string|null
      */
     public $userPhone;
@@ -159,10 +161,13 @@ class CreatePayment extends MixplatMethod
      * JSON-массив с данными банковской карты
      * содержит string-параметры: pan, mm, yy, cvc, name,
      * зашифрованные отдельным ключом шифрования (будет сообщён при интеграции).
-     * Обязательный при payment_method = card и возможен только при наличии у ТСП сертификата PCIDSS.
+     * Используется по договорённости с Миксплат для интеграций PCI DSS.
      * @var array|null
      */
     public $userCard;
+
+    /** @var string|null URL возврата после 3-D Secure, обязателен при payment_method=card. */
+    public $redirectUrl;
 
     /**
      * Для создания подписки передать "recurrent_payment": 1.
@@ -188,8 +193,8 @@ class CreatePayment extends MixplatMethod
 
     /**
      * Схема проведения платежа по банковским картам
-     * Необязательный, по умолчанию "sms".
-     * \MixplatClient\MixplatVars::CARD_SHEME_*
+     * Необязательный, по умолчанию "single".
+     * \MixplatClient\MixplatVars::PAYMENT_SCHEME_*
      * @var string|null
      */
     public $paymentScheme;

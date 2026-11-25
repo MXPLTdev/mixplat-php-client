@@ -73,6 +73,42 @@ $apiRequest->test               = 1;
 ```php
 $response = $mixplatClient->request($apiRequest);
 ```
+## Данные для чека
+
+Передайте позиции в `$apiRequest->items` до вызова `request()`. В `sum` укажите итог позиции в минорных единицах валюты с учётом количества. Например, три блокнота по 100 ₽ дают сумму 30 000 копеек.
+
+```php
+// ФФД 1.2
+$apiRequest->amount = 30000;
+$apiRequest->items = array(array(
+    'name' => 'Блокнот',
+    'quantity' => 3,
+    'sum' => 30000,
+    'unit' => 0,
+    'payment_object' => 1,
+    'payment_method' => 'full_payment',
+));
+```
+
+| Поле | ФФД 1.05 | ФФД 1.2 |
+| --- | --- | --- |
+| `unit` | Необязательная строка. По умолчанию `"шт."`. | Обязательный целочисленный код. Для поштучного товара укажите `0`, для килограммов — `11`. |
+| `payment_object` | Строка, например `"commodity"` для товара, `"service"` для услуги. | Целочисленный код, например `1` для обычного неподакцизного немаркированного товара, `4` для услуги. |
+
+При пропуске `payment_object`, `payment_method` или `vat` используются соответствующие настройки компании. Клиент передаёт вложенный массив с указанными ключами и типами. [Справочник полей чека](https://docs.mixplat.ru/methods#items)
+
+## Запрос статуса
+
+Для поиска по идентификатору Миксплат задайте `$request->paymentId`. Для поиска по номеру заказа используйте `merchantPaymentId` и идентификатор проекта из конфигурации клиента.
+
+```php
+$request = new \MixplatClient\Method\GetPaymentStatus();
+$request->merchantPaymentId = 'order-123';
+$status = $mixplatClient->request($request);
+```
+
+Список платежей за период запрашивает `GetPaymentStatuses` (поля `dateCreatedFrom`, `dateCreatedTo` и `page`), статус подписки — `GetSubscriptionStatus` (поле `subscriptionId`). Для отправки SMS используйте `CreateSms` с полями `userPhone` и `message`. Для повторной отправки того же запроса сохраните исходный `requestId`. [Backend API](https://docs.mixplat.ru/methods/) · [Расширения API](https://docs.mixplat.ru/extensions/)
+
 ## Перенаправление на платёжную форму
 
 При обращении к методу `CreatePaymentForm` и получении ссылки на платёжную форму вида `$response['redirect_url']` для переадресации плательщика на эту форму используйте редирект с использованием JavaScript:
@@ -90,4 +126,12 @@ exit;
 
 может вызывать некорректное поведение в некоторых встроенных браузерах (in-app browsers), используемых в мобильных приложениях.
 
-См. подробнее в [примере](https://github.com/MXPLTdev/mixplat-php-client/blob/master/examples/example_create_payment_form.php).
+См. подробнее в [примере](examples/example_create_payment_form.php).
+
+## Проверка по OpenAPI
+
+Скачайте [официальную схему](https://docs.mixplat.ru/openapi.json) и укажите путь к локальному файлу. Тест сверяет параметры запросов и подписи с примерами из схемы, проверяет уведомления и данные чека.
+
+```bash
+php tests/openapi.php /path/to/openapi.json
+```

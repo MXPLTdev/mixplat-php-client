@@ -7,6 +7,7 @@ class MixplatVars
     /* Валюта платежа (currency) */
     const CURRENCY_RUB = 'RUB';
     const CURRENCY_EUR = 'EUR';
+    const CURRENCY_USD = 'USD';
     const CURRENCY_BYN = 'BYN';
     const CURRENCY_KZT = 'KZT';
     const CURRENCY_UAH = 'UAH';
@@ -19,10 +20,15 @@ class MixplatVars
     const RESULT_OK = 'ok';
     const RESULT_ERROR_INVALID_REQUEST = 'error_invalid_request';
     const RESULT_ERROR_SIGNATURE = 'error_signature';
+    const RESULT_ERROR_PAYMENT_NOT_FOUND = 'error_payment_not_found';
+    const RESULT_ERROR_WRONG_SIGNATURE = 'error_wrong_signature';
+    const RESULT_ERROR_SUBSCRIPTION_NOT_FOUND = 'error_subscription_not_found';
+    const RESULT_ERROR_PAYMENT_PARAMETERS = 'error_payment_parameters';
     const RESULT_ERROR_NOT_FOUND = 'error_not_found';
     const RESULT_ERROR_PROJECT_NOT_FOUND = 'error_project_not_found';
     const RESULT_ERROR_PROJECT_NOT_ACTIVE = 'error_project_not_active';
     const RESULT_ERROR_METHOD_NOT_ACTIVE = 'error_method_not_active';
+    /** @deprecated Используйте RESULT_ERROR_PAYMENT_PARAMETERS. */
     const RESULT_ERROR_PAYMENT_PARAMENTERS = 'error_payment_paramenters';
     const RESULT_ERROR_FRAUD_CONTROL = 'error_fraud_control';
     const RESULT_ERROR_SETTINGS = 'error_settings';
@@ -53,6 +59,13 @@ class MixplatVars
     const PAYMENT_EXT_STATUS_FAILURE_NOT_AVAILABLE = 'failure_not_available';
     const PAYMENT_EXT_STATUS_FAILURE_ACCEPT_TIMEOUT = 'failure_accept_timeout';
     const PAYMENT_EXT_STATUS_FAILURE_LIMITS = 'failure_limits';
+    const PAYMENT_EXT_STATUS_FAILURE_TIMEOUT = 'failure_timeout';
+    const PAYMENT_EXT_STATUS_FAILURE_NO_MONEY = 'failure_no_money';
+    const PAYMENT_EXT_STATUS_FAILURE_MAX_AMOUNT = 'failure_max_amount';
+    const PAYMENT_EXT_STATUS_FAILURE_PAYMENT_DATA = 'failure_payment_data';
+    const PAYMENT_EXT_STATUS_FAILURE_CARD_EXPIRED = 'failure_card_expired';
+    const PAYMENT_EXT_STATUS_FAILURE_CARD_BLOCKED = 'failure_card_blocked';
+    const PAYMENT_EXT_STATUS_FAILURE_CANCELED_BY_BANK = 'failure_canceled_by_bank';
     const PAYMENT_EXT_STATUS_FAILURE_OTHER = 'failure_other';
     const PAYMENT_EXT_STATUS_FAILURE_MIN_AMOUNT = 'failure_min_amount';
     const PAYMENT_EXT_STATUS_FAILURE_PENDING_TIMEOUT = 'failure_pending_timeout';
@@ -62,7 +75,32 @@ class MixplatVars
     const REFUND_STATUS_SUCCESS = 'success';
     const REFUND_STATUS_FAILURE = 'failure';
 
+    const REFUND_EXT_STATUS_SUCCESS_SUCCESS = 'success_success';
+    const REFUND_EXT_STATUS_FAILURE_INSUFFICIENT_FUNDS = 'failure_insufficient_funds';
+    const REFUND_EXT_STATUS_FAILURE_FAILURE = 'failure_failure';
+
+    /* Группы платёжных методов (payment_method_group). */
+    const PAYMENT_METHOD_GROUP_MOBILE = 'mobile';
+    const PAYMENT_METHOD_GROUP_CARD = 'card';
+    const PAYMENT_METHOD_GROUP_BANK = 'bank';
+    const PAYMENT_METHOD_GROUP_WALLET = 'wallet';
+    const PAYMENT_METHOD_GROUP_BNPL = 'bnpl';
+
     /* Платёжный метод (payment_method) */
+    const PAYMENT_METHOD_MIR_PAY = 'mir_pay';
+    const PAYMENT_METHOD_YANDEX_PAY = 'yandex_pay';
+    const PAYMENT_METHOD_SBP = 'sbp';
+    const PAYMENT_METHOD_DIGITAL_RUB = 'digital_rub';
+    const PAYMENT_METHOD_SBERPAY = 'sberpay';
+    const PAYMENT_METHOD_T_PAY = 't_pay';
+    const PAYMENT_METHOD_ALFA_PAY = 'alfa_pay';
+    const PAYMENT_METHOD_MTS_PAY = 'mts_pay';
+    const PAYMENT_METHOD_WB_PAY = 'wb_pay';
+    const PAYMENT_METHOD_BNPL_PODELI = 'bnpl_podeli';
+    const PAYMENT_METHOD_BNPL_SPLIT = 'bnpl_split';
+    const PAYMENT_METHOD_BNPL_DOLYAMI = 'bnpl_dolyami';
+    const PAYMENT_METHOD_YANDEX_MONEY = 'yandex_money';
+    const PAYMENT_METHOD_WEBMONEY = 'webmoney';
     const PAYMENT_METHOD_MOBILE = 'mobile';
     const PAYMENT_METHOD_CARD = 'card';
     const PAYMENT_METHOD_WALLET = 'wallet';
@@ -78,6 +116,12 @@ class MixplatVars
     const PAYMENT_SYSTEM_MOBILE_RU_YOTA = 'mobile_ru_yota';
     const PAYMENT_SYSTEM_MOBILE_OTHER = 'mobile_other';
     /* для payment_method = card (банковские карты)	*/
+    const PAYMENT_SYSTEM_CARD_VISA = 'card_visa';
+    const PAYMENT_SYSTEM_CARD_MASTERCARD = 'card_mastercard';
+    const PAYMENT_SYSTEM_CARD_MIR = 'card_mir';
+    const PAYMENT_SYSTEM_CARD_UNIONPAY = 'card_unionpay';
+    const PAYMENT_SYSTEM_CARD_JCB = 'card_jcb';
+    const PAYMENT_SYSTEM_CARD_OTHER = 'card_other';
     const PAYMENT_SYSTEM_VISA = 'visa';
     const PAYMENT_SYSTEM_MASTERCARD = 'mastercard';
     const PAYMENT_SYSTEM_MIR = 'mir';
@@ -100,17 +144,27 @@ class MixplatVars
     const BILLING_TYPE_CPA = 'cpa';
 
     /* Схема проведения платежа по банковским картам */
+    const PAYMENT_SCHEME_SINGLE = 'single';
+    const PAYMENT_SCHEME_DOUBLE = 'double';
+    /** @deprecated Используйте PAYMENT_SCHEME_SINGLE. */
     const CARD_SHEME_SMS = 'sms';
+    /** @deprecated Используйте PAYMENT_SCHEME_DOUBLE. */
     const CARD_SHEME_DMS = 'dms';
 
 
     /* Фискализация */
     const ITEMS_VAT_NONE = 'none';
     const ITEMS_VAT_VAT0 = 'vat0';
+    const ITEMS_VAT_VAT5 = 'vat5';
+    const ITEMS_VAT_VAT7 = 'vat7';
+    const ITEMS_VAT_VAT105 = 'vat105';
+    const ITEMS_VAT_VAT107 = 'vat107';
     const ITEMS_VAT_VAT10 = 'vat10';
     const ITEMS_VAT_VAT110 = 'vat110';
     const ITEMS_VAT_VAT20 = 'vat20';
     const ITEMS_VAT_VAT120 = 'vat120';
+    const ITEMS_VAT_VAT22 = 'vat22';
+    const ITEMS_VAT_VAT122 = 'vat122';
 
     const ITEMS_METHOD_FULL_PREPAYMENT = 'full_prepayment';
     const ITEMS_METHOD_PREPAYMENT = 'prepayment';
@@ -120,6 +174,7 @@ class MixplatVars
     const ITEMS_METHOD_CREDIT = 'credit';
     const ITEMS_METHOD_CREDIT_PAYMENT = 'credit_payment';
 
+    /* Строковые значения payment_object для ФФД 1.05. */
     const ITEMS_OBJECT_COMMODITY = 'commodity';
     const ITEMS_OBJECT_EXCISE = 'excise';
     const ITEMS_OBJECT_JOB = 'job';
@@ -128,6 +183,12 @@ class MixplatVars
     const ITEMS_OBJECT_PROPERTY_RIGHT = 'property_right';
     const ITEMS_OBJECT_COMPOSITE = 'composite';
     const ITEMS_OBJECT_ANOTHER = 'another';
+
+    /* Часто используемые коды unit и payment_object для ФФД 1.2. */
+    const ITEMS_UNIT_FFD12_PIECE = 0;
+    const ITEMS_UNIT_FFD12_KILOGRAM = 11;
+    const ITEMS_OBJECT_FFD12_COMMODITY = 1;
+    const ITEMS_OBJECT_FFD12_SERVICE = 4;
 
 
     const NOTIFY_REQUEST_PAYMENT_STATUS = 'payment_status';

@@ -42,6 +42,12 @@ class SmsNotify extends MixplatNotify
     public $mobile;
 
 
+    /** @var string */
+    public $dateCreated;
+
+    /** @var int */
+    public $parts;
+
     /**
      * Signature.
      * @var string

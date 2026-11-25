@@ -44,13 +44,15 @@ class CreateRecurrentPayment extends MixplatMethod
 
     /**
      * Сумма платежа (в минорных единицах, копейках).
-     * От 100 до 5000000. Обязательный параметр.
+     * От 100 до 100000000. Обязательный параметр.
      * @var int
      */
     public $amount;
 
     /**
-     * Данные для чека
+     * Позиции чека. sum — сумма позиции с учётом quantity в минорных единицах.
+     * Типы unit и payment_object зависят от версии ФФД.
+     * @see https://docs.mixplat.ru/methods#items
      * Необязательный параметр.
      * @var array|null
      */
